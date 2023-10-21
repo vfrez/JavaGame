@@ -9,11 +9,11 @@ public class RectObj extends Rectangle {
     public int speed = 0;
     public int rotation = 0;
 
-    public RectObj(int x, int y, int height, int width) {
-        super(x, y, height, width);
+    public RectObj(int x, int y, int width, int height) {
+        super(x, y, width, height);
 
         color = new Color(new Random().nextInt(255),new Random().nextInt(255),new Random().nextInt(255));
-        speed = new Random().nextInt(6-4) + 4;
+        speed = new Random().nextInt(8-6) + 6;
     }
 
     public void update() {
