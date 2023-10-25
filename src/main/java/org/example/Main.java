@@ -25,7 +25,6 @@ public class Main extends Canvas implements Runnable, MouseListener {
         spawner = new Spawner();
     }
 
-
     public void render() {
         BufferStrategy bs = this.getBufferStrategy();
 
@@ -37,16 +36,17 @@ public class Main extends Canvas implements Runnable, MouseListener {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        if (gameOver == false) {
+
+        if (!gameOver) {
 //        Colocar texto na parte de cima da tela
 //        g.setFont(new Font("Arial", Font.BOLD, 23));
 //        g.setColor(Color.white);
 //        g.drawString("Pontos" + counter, WIDTH/2 - 60, 30);
 
             g.setColor(Color.GREEN);
-            g.fillRect(Main.WIDTH / 2 - 100 - 70, 20, counter * 3, 20);
+            g.fillRect(Main.WIDTH / 2 - 170, 20, counter * 3, 20);
             g.setColor(Color.WHITE);
-            g.drawRect(Main.WIDTH / 2 - 100 - 70, 20, 300, 20);
+            g.drawRect(Main.WIDTH / 2 - 170, 20, 300, 20);
 
             spawner.render(g);
         } else {
@@ -61,14 +61,13 @@ public class Main extends Canvas implements Runnable, MouseListener {
     }
 
     public void update() {
-        if (gameOver == false) {
+        if (!gameOver) {
             spawner.update();
             if (counter <= 0) {
                 counter = 100;
                 gameOver = true;
             }
         }
-
     }
 
     @Override
@@ -114,7 +113,7 @@ public class Main extends Canvas implements Runnable, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        clicked = false;
     }
 
     @Override

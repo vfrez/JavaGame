@@ -5,33 +5,31 @@ import org.example.utils.GameUtils;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Spawner {
+
     public int timer = 0;
     public List<GameObj> rectangles = new ArrayList<>();
     public List<Particle> particles = new ArrayList<>();
 
     public void render(Graphics g) {
-        for (int i = 0; i < rectangles.size(); i++) {
-            GameObj current = rectangles.get(i);
-
+        rectangles.forEach(current -> {
             Graphics2D g2 = (Graphics2D) g;
             g2.rotate(Math.toRadians(current.rotation), current.x + current.width / 2, current.y + current.height / 2);
             g2.setColor(current.color);
             g2.fillRect(current.x, current.y, current.width, current.height);
             g2.rotate(Math.toRadians(-current.rotation), current.x + current.width / 2, current.y + current.height / 2);
-        }
-        for (int i = 0; i < particles.size(); i++) {
-            particles.get(i).render(g);
-        }
+        });
+
+        particles.forEach(particle -> particle.render(g));
 
     }
-
 
     public void update() {
         timer++;
         if (timer % 20 == 0) {
-            rectangles.add(new GameObj(0, GameUtils.generateRandomInt(480 - 40), 40, 40));
+            rectangles.add(new GameObj(0, GameUtils.generateRandomInt(440), 40, 40));
         }
 
         for (int i = 0; i < rectangles.size(); i++) {
@@ -51,9 +49,7 @@ public class Spawner {
                         Main.score++;
                         Main.clicked = false;
 
-                        for (int j = 0; j < 50; j++) {
-                            particles.add(new Particle(current.x, current.y, 8, 8, current.color));
-                        }
+                        IntStream.range(0, 50).forEach(j -> particles.add(new Particle(current.x, current.y, 8, 8, current.color)));
 
                     }
 
@@ -68,7 +64,6 @@ public class Spawner {
             if (part.timer >= 60) {
                 particles.remove(part);
             }
-
         }
     }
 }
