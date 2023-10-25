@@ -16,7 +16,6 @@ public class Main extends Canvas implements Runnable, MouseListener {
     public static boolean clicked = false;
     public static boolean gameOver = false;
 
-
     public Spawner spawner;
 
     public Main() {
@@ -30,15 +29,15 @@ public class Main extends Canvas implements Runnable, MouseListener {
     public void render() {
         BufferStrategy bs = this.getBufferStrategy();
 
-        if(bs == null) {
+        if (bs == null) {
             this.createBufferStrategy(3);
             return;
         }
 
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
-        g.fillRect(0 ,0 ,WIDTH, HEIGHT);
-        if(gameOver == false) {
+        g.fillRect(0, 0, WIDTH, HEIGHT);
+        if (gameOver == false) {
 //        Colocar texto na parte de cima da tela
 //        g.setFont(new Font("Arial", Font.BOLD, 23));
 //        g.setColor(Color.white);
@@ -53,36 +52,34 @@ public class Main extends Canvas implements Runnable, MouseListener {
         } else {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 30));
-            g.drawString("Perdeu", WIDTH/2 - 100, HEIGHT/2);
+            g.drawString("Perdeu", WIDTH / 2 - 100, HEIGHT / 2);
 
-            g.drawString("Aperte Enter para recomeçar", WIDTH/2 - 200, HEIGHT/2 + 80);
+            g.drawString("Aperte Enter para recomeçar", WIDTH / 2 - 200, HEIGHT / 2 + 80);
 
         }
         bs.show();
     }
 
     public void update() {
-       if (gameOver == false) {
-           spawner.update();
-
-           //counter--;
-           if (counter <= 0) {
-               counter = 100;
+        if (gameOver == false) {
+            spawner.update();
+            if (counter <= 0) {
+                counter = 100;
                 gameOver = true;
-           }
-       }
+            }
+        }
 
     }
 
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             update();
             render();
 
 
             try {
-                Thread.sleep(1000/60);
+                Thread.sleep(1000 / 60);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
