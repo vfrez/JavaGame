@@ -16,7 +16,6 @@ public class Main extends Canvas implements Runnable, MouseListener {
     public static boolean clicked = false;
     public static boolean gameOver = false;
 
-
     public Spawner spawner;
 
     public Main() {
@@ -26,63 +25,60 @@ public class Main extends Canvas implements Runnable, MouseListener {
         spawner = new Spawner();
     }
 
-
     public void render() {
         BufferStrategy bs = this.getBufferStrategy();
 
-        if(bs == null) {
+        if (bs == null) {
             this.createBufferStrategy(3);
             return;
         }
 
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
-        g.fillRect(0 ,0 ,WIDTH, HEIGHT);
-        if(gameOver == false) {
+        g.fillRect(0, 0, WIDTH, HEIGHT);
+
+        if (!gameOver) {
 //        Colocar texto na parte de cima da tela
 //        g.setFont(new Font("Arial", Font.BOLD, 23));
 //        g.setColor(Color.white);
 //        g.drawString("Pontos" + counter, WIDTH/2 - 60, 30);
 
             g.setColor(Color.GREEN);
-            g.fillRect(Main.WIDTH / 2 - 100 - 70, 20, counter * 3, 20);
+            g.fillRect(Main.WIDTH / 2 - 170, 20, counter * 3, 20);
             g.setColor(Color.WHITE);
-            g.drawRect(Main.WIDTH / 2 - 100 - 70, 20, 300, 20);
+            g.drawRect(Main.WIDTH / 2 - 170, 20, 300, 20);
 
             spawner.render(g);
         } else {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 30));
-            g.drawString("Perdeu", WIDTH/2 - 100, HEIGHT/2);
+            g.drawString("Perdeu", WIDTH / 2 - 100, HEIGHT / 2);
 
-            g.drawString("Aperte Enter para recomeçar", WIDTH/2 - 200, HEIGHT/2 + 80);
+            g.drawString("Aperte Enter para recomeçar", WIDTH / 2 - 200, HEIGHT / 2 + 80);
 
         }
         bs.show();
     }
 
     public void update() {
-       if (gameOver == false) {
-           spawner.update();
-
-           //counter--;
-           if (counter <= 0) {
-               counter = 100;
+        if (!gameOver) {
+            spawner.update();
+            if (counter <= 0) {
+                counter = 100;
                 gameOver = true;
-           }
-       }
-
+            }
+        }
     }
 
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             update();
             render();
 
 
             try {
-                Thread.sleep(1000/60);
+                Thread.sleep(1000 / 60);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -117,7 +113,7 @@ public class Main extends Canvas implements Runnable, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        clicked = false;
     }
 
     @Override
